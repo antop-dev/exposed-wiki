@@ -1,9 +1,12 @@
 package org.antop.exposed.entity
 
+import org.antop.exposed.table.StarWarsFilmActors
 import org.antop.exposed.table.StarWarsFilms
+import org.antop.exposed.table.UserRatings
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
+import org.jetbrains.exposed.sql.SizedIterable
 
 class StarWarsFilm(id: EntityID<Int>) : IntEntity(id) {
     companion object : IntEntityClass<StarWarsFilm>(StarWarsFilms)
@@ -12,8 +15,7 @@ class StarWarsFilm(id: EntityID<Int>) : IntEntity(id) {
     var name by StarWarsFilms.name
     var director by StarWarsFilms.director
 
-    override fun toString(): String {
-        return "StarWarsFilm(id=$id, sequelId=$sequelId, name='$name', director='$director')"
-    }
+    val ratings by UserRating referrersOn UserRatings.film // make sure to use val and referrersOn
+    var actors: SizedIterable<Actor> by Actor via StarWarsFilmActors
 
 }

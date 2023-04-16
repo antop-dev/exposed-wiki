@@ -17,6 +17,13 @@ class StarWarsFilmTest {
                 director = "Rian Johnson"
             }
             println("movie = $movie")
+
+            // id는 EntityID<Int> 타입니다.
+            // 직접 꺼내서 사용하기 전까지 인서트되지 않고 트랜잭션이 끝날 때 인서트 된다.
+            val id = movie.id
+            // 만약 직접 꺼내 써야한다면 이 때 인서트 된다.
+            // 로그 순서 확인할 것
+            // println("move id = ${id.value}")
         }
     }
 
