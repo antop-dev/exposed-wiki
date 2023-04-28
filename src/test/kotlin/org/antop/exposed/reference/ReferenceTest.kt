@@ -1,9 +1,6 @@
 package org.antop.exposed.reference
 
-import org.antop.exposed.entity.Actor
-import org.antop.exposed.entity.StarWarsFilm
-import org.antop.exposed.entity.User
-import org.antop.exposed.entity.UserRating
+import org.antop.exposed.entity.*
 import org.antop.exposed.exposed
 import org.antop.exposed.table.*
 import org.jetbrains.exposed.sql.SizedCollection
@@ -89,6 +86,20 @@ class ReferenceTest {
             // 트랜잭션이 끝낼때 인서트 되는 게 아니다.
 
             println("${film.name} actors is ${film.actors.joinToString(", ") { "${it.lastname} ${it.firstname}" }}")
+        }
+    }
+
+    @Test
+    fun parentChild() {
+        exposed(Nodes, NodeToNodes) {
+            val root = Node.new { name = "root" }
+            val child1 = Node.new { name = "child1" }
+            val child2 = Node.new { name = "child2" }
+
+            // root에 child를 추가해도 되고 child에 root를 추가해도 된다.
+            child1.parents = SizedCollection(root)
+            child2.parents = SizedCollection(root)
+//            root.children = SizedCollection(listOf(child1, child2))
         }
     }
 }
