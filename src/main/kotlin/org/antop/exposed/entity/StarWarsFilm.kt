@@ -14,6 +14,7 @@ class StarWarsFilm(id: EntityID<Int>) : IntEntity(id) {
     var sequelId by StarWarsFilms.sequelId
     var name by StarWarsFilms.name
     var director by StarWarsFilms.director
+    var description by StarWarsFilms.description
 
     val ratings by UserRating referrersOn UserRatings.film // make sure to use val and referrersOn
     var actors: SizedIterable<Actor> by Actor via StarWarsFilmActors

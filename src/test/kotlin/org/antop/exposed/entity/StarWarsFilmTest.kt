@@ -1,6 +1,8 @@
 package org.antop.exposed.entity
 
 import org.antop.exposed.exposed
+import org.antop.exposed.table.Actors
+import org.antop.exposed.table.StarWarsFilmActors
 import org.antop.exposed.table.StarWarsFilms
 import org.jetbrains.exposed.sql.SizedIterable
 import org.jetbrains.exposed.sql.SortOrder
@@ -76,5 +78,14 @@ class StarWarsFilmTest {
         }
         // 트랜잭션이 끝나는 시점
         // UPDATE STARWARSFILMS SET DIRECTOR='Antop', "NAME"='Episode VIII – The Last Jedi' WHERE ID = 1
+    }
+
+    @Test
+    fun eagerLoading() {
+        // 기본적으로 text 컬럼은 Lazy Loading
+        exposed(StarWarsFilms, StarWarsFilmActors, Actors, sqlFile = "eager-loading.sql") {
+            val movie = StarWarsFilm.findById(1)
+            println("description = ${movie?.description}")
+        }
     }
 }

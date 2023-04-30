@@ -151,7 +151,7 @@ class StarWarsFilmsTest {
 
     @Test
     fun join() {
-        exposed(StarWarsFilms, Players, ddl = true) {
+        exposed(StarWarsFilms, Players) {
             // TODO: 왜 에러가 나는 걸까? 매핑(reference)을 안해서?
             runCatching {
                 val query = (Players innerJoin StarWarsFilms)

@@ -3,6 +3,7 @@ package org.antop.exposed.reference
 import org.antop.exposed.entity.*
 import org.antop.exposed.exposed
 import org.antop.exposed.table.*
+import org.jetbrains.exposed.dao.load
 import org.jetbrains.exposed.sql.SizedCollection
 import org.junit.jupiter.api.Test
 
@@ -102,4 +103,18 @@ class ReferenceTest {
 //            root.children = SizedCollection(listOf(child1, child2))
         }
     }
+
+    @Test
+    fun eagerLoading() {
+        exposed(StarWarsFilms, StarWarsFilmActors, Actors, UserRatings, sqlFile = "eager-loading.sql") {
+            val movie = StarWarsFilm.findById(1)?.load(StarWarsFilm::actors)
+            println("movie = $movie")
+            movie?.let {
+                for (actor in it.actors) {
+                    println(" -> actor = $actor")
+                }
+            }
+        }
+    }
+
 }
